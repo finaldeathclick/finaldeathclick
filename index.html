@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>FinalDeathClick</title>
+    <link rel="icon" type="image/png" href="img/лого.PNG"> 
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <div class="logo-container">
+        <img src="img/лого.PNG" alt="Логотип" class="logo-img"> 
+    </div>
+
+    <div class="top-buttons">
+        <button class="inventory-btn" id="inventoryBtn">🎒 Инвентарь</button>
+        <button class="farm-btn" id="farmBtn">💰 Фарм</button>
+        <button class="settings-btn" id="settingsBtn">⚙️ Настройки</button>
+    </div>
+
+    <div class="game-container">
+        <div class="background blurred" id="background"></div>
+        <div class="boss-container" id="bossContainer"></div>
+        <div class="ui-container" id="uiContainer"></div>
+    </div>
+
+    <div class="inventory-modal" id="inventoryModal">
+        <div class="inventory-content">
+            <h2>🎒 Инвентарь</h2>
+            <div class="inventory-items" id="inventoryItems"></div>
+            <button class="close-inventory" id="closeInventory">✖ Закрыть</button>
+        </div>
+    </div>
+
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <h2>⚙️ Настройки</h2>
+            <div class="settings-info" id="settingsInfo"></div>
+            <button class="close-settings" id="closeSettings">✖ Закрыть</button>
+        </div>
+    </div>
+
+    <script src="js/config/bosses.js"></script>
+    <script src="js/config/settings.js"></script>
+    <script src="js/core/GameManager.js"></script>
+    <script src="js/core/UIManager.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
