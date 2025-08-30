@@ -139,7 +139,7 @@ class Game {
         if (chest) {
             chest.classList.add('visible');
             // Применяем путь к сундуку
-            chest.style.backgroundImage = `url('${ui}Сундук.PNG')`;
+            chest.style.backgroundImage = `url('${ui}Сундук.png')`;
 
             chest.addEventListener('click', () => {
                 chest.classList.remove('click-anim');
