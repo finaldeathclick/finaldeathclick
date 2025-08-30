@@ -1,0 +1,797 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'MedievalSharp', cursive;
+    background: radial-gradient(1200px 600px at 70% 20%, rgba(255, 215, 0, 0.08), transparent 40%), linear-gradient(45deg, #141016 0%, #22181b 50%, #141016 100%);
+    color: #f0d6a7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ===== Логотип ===== */
+.logo-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+.logo-img {
+    width: 120px; /* Можете настроить размер */
+    height: auto;
+    opacity: 0.8;
+}
+
+
+/* ===== Top buttons ===== */
+.top-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 100;
+}
+
+.settings-btn, /* Добавлен стиль для кнопки настроек */
+.inventory-btn,
+.farm-btn {
+    --glow: 0 0 0 rgba(255, 215, 0, 0.0);
+    background: linear-gradient(#8b4513, #6b3410);
+    color: #ffd700;
+    border: 2px solid #ffd700;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    font-family: 'MedievalSharp', cursive;
+    letter-spacing: .3px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .25s ease, filter .25s ease;
+    opacity: .85;
+    box-shadow: var(--glow);
+}
+/* Кнопка сброса удалена */
+.settings-btn:hover,
+.inventory-btn:hover,
+.farm-btn:hover {
+    opacity: 1;
+    transform: translateY(-1px) scale(1.04);
+    box-shadow: 0 0 12px rgba(255, 215, 0, .25), 0 0 32px rgba(255, 215, 0, .12) inset;
+}
+
+.settings-btn:active,
+.inventory-btn:active,
+.farm-btn:active {
+    transform: translateY(0) scale(.98);
+}
+
+/* ===== Game container ===== */
+.game-container {
+    position: relative;
+    width: 92%;
+    max-width: 880px;
+    height: 72vh;
+    border: 10px solid transparent;
+    border-radius: 22px;
+    overflow: hidden;
+    background: linear-gradient(#2b1f1a, #1f1512) padding-box,
+        linear-gradient(140deg, rgba(255, 215, 0, .6), rgba(139, 69, 19, .7), rgba(255, 215, 0, .4)) border-box;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .7), inset 0 0 60px rgba(0, 0, 0, .35);
+}
+
+.background {
+    position: absolute;
+    inset: 0;
+    background: center/cover no-repeat;
+    transition: filter 1.2s ease, transform 6s ease;
+}
+
+.background.blurred {
+    filter: blur(8px) brightness(.9);
+    transform: scale(1.03);
+}
+
+.boss-container,
+.ui-container {
+    position: absolute;
+    inset: 0;
+}
+
+.ui-container {
+    pointer-events: none;
+}
+
+.ui-container>* {
+    pointer-events: auto;
+}
+
+/* ===== Guide (Путеводитель) ===== */
+.guide-container {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    z-index: 10;
+    transition: all 1s ease;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.guide-image {
+    width: 220px;
+    height: 260px;
+    background: center/contain no-repeat;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.55));
+}
+
+.guide-speech {
+    background: rgba(42, 27, 18, 0.92);
+    border: 4px solid #ffd700;
+    border-radius: 20px;
+    padding: 26px 28px;
+    max-width: 440px;
+    position: relative;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .45), inset 0 0 60px rgba(255, 215, 0, .03);
+}
+
+.guide-speech::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    bottom: 30px;
+    border: 10px solid transparent;
+    border-right-color: #ffd700;
+}
+
+.guide-speech::after {
+    content: '';
+    position: absolute;
+    left: -16px;
+    bottom: 30px;
+    border: 8px solid transparent;
+    border-right-color: rgba(42, 27, 18, 0.92);
+}
+
+.guide-container.hidden {
+    opacity: 0;
+    transform: translateY(100px);
+    pointer-events: none;
+}
+
+.guide-text {
+    font-size: 1.28rem;
+    line-height: 1.55;
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin-bottom: 18px;
+}
+
+.continue-btn,
+.back-to-battle-btn,
+.craft-btn {
+    background: linear-gradient(#ffd700, #d4a21d);
+    color: #492c12;
+    border: 2px solid #8b5a22;
+    padding: 12px 30px;
+    font-size: 1.06rem;
+    font-family: 'MedievalSharp', cursive;
+    letter-spacing: .3px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .25s ease;
+    margin-top: 8px;
+    box-shadow: 0 2px 0 #7b4d1b, inset 0 0 20px rgba(255, 255, 255, .05);
+}
+
+.continue-btn:hover,
+.back-to-battle-btn:hover,
+.craft-btn:not(.disabled):hover {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 0 16px rgba(255, 215, 0, 0.45);
+}
+
+.craft-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== Boss / Chest ===== */
+.boss,
+.chest {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 260px;
+    height: 260px;
+    background: center/contain no-repeat;
+    opacity: 0;
+    transition: all 1.2s ease;
+    z-index: 5;
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.65));
+    cursor: pointer;
+}
+
+.boss.visible,
+.chest.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.boss {
+    animation: slimeFloat 3.2s ease-in-out infinite;
+}
+
+.boss.dead {
+    animation: deathAnimation 1s ease-out forwards;
+    cursor: default;
+}
+
+/* кликовая анимация */
+@keyframes clickBump {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.boss.click-anim {
+    animation: slimeFloat 3.2s ease-in-out infinite, clickBump 0.15s ease-out 1;
+}
+
+.chest.click-anim {
+    animation: clickBump 0.15s ease-out 1;
+}
+
+/* ===== HP panel (новый красивый прогресс-бар) ===== */
+.boss-hp {
+    position: absolute;
+    top: -46px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.78);
+    border: 3px solid #8b5a22;
+    border-radius: 12px;
+    padding: 10px 14px;
+    color: #ff6b6b;
+    font-size: 1.06rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.55);
+    display: none;
+    min-width: 260px;
+    text-align: center;
+}
+
+.boss-hp.visible {
+    display: block;
+}
+
+.hp-bar {
+    width: 260px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid #8b5a22;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 auto 6px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, .35);
+}
+
+.hp-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #3cb371, #66bb6a);
+    transition: width .25s ease, background .25s ease;
+}
+
+.hp-fill.mid {
+    background: linear-gradient(90deg, #ffb300, #ffca28);
+}
+
+.hp-fill.low {
+    background: linear-gradient(90deg, #e53935, #ff7043);
+}
+
+.hp-numbers {
+    font-size: .95rem;
+    color: #ffd38a;
+}
+
+.hp-numbers .hp-text {
+    color: #ffd700;
+    margin-right: 6px;
+}
+
+/* ===== Floating numbers ===== */
+.damage-text {
+    position: absolute;
+    color: #ff6464;
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.85);
+    animation: damageFloat 1s ease-out forwards;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.drop-text {
+    position: absolute;
+    color: #9aff9a;
+    font-size: 1.35rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    animation: damageFloat 1.2s ease-out forwards;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ===== Panels ===== */
+.click-damage {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.72);
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 8px 14px;
+    color: #ffd700;
+    font-size: 1.05rem;
+    display: none;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .4);
+}
+
+.click-damage.visible {
+    display: block;
+}
+
+.farm-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.72);
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    padding: 8px 14px;
+    color: #ffd700;
+    font-size: 1.05rem;
+    display: none;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .4);
+}
+
+.farm-info.visible {
+    display: block;
+}
+
+/* ===== Reset modal удален ===== */
+
+/* ===== Inventory ===== */
+.inventory-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.inventory-modal.visible {
+    display: flex;
+}
+
+.inventory-content {
+    background: radial-gradient(600px 250px at 10% 0%, rgba(255, 215, 0, .05), transparent 50%), linear-gradient(#3a2921, #2c1e19);
+    border: 2px solid #ffd700; /* Рамка сделана тоньше (было 4px) */
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 600px;
+    width: 92%;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .55), inset 0 0 50px rgba(0, 0, 0, .25);
+}
+
+.inventory-content h2 {
+    color: #ffd700;
+    margin-bottom: 16px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-size: 2rem;
+}
+
+.inventory-items {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.inventory-item {
+    background: rgba(139, 69, 19, 0.78);
+    border: 1px solid #ffd700; /* Рамка сделана тоньше (было 2px) */
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, .15);
+}
+
+.item-image {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    border: 1px solid #daa520; /* Рамка сделана тоньше (было 2px) */
+    border-radius: 10px;
+    background: #2c1e19;
+    padding: 6px;
+}
+
+.item-info {
+    text-align: left;
+    flex-grow: 1;
+}
+
+.item-info h3 {
+    color: #ffd700;
+    margin-bottom: 4px;
+    font-size: 1.18rem;
+}
+
+.item-info p {
+    color: #f0d6a7;
+    margin-bottom: 6px;
+    font-size: .98rem;
+}
+
+.item-count {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+    background: #ffd700;
+    color: #8b4513;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: .9rem;
+}
+
+.req {
+    font-size: .98rem;
+    color: #ffdca8;
+    opacity: .98;
+}
+
+.req strong {
+    color: #fff;
+}
+
+.req.ok {
+    color: #b8ffb8;
+}
+
+.req.miss {
+    color: #ffb8b8;
+}
+
+.close-inventory {
+    background: linear-gradient(#ff6b6b, #cc5555);
+    color: white;
+    border: 2px solid #8b4513;
+    padding: 10px 20px;
+    font-family: 'MedievalSharp', cursive;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.close-inventory:hover {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.35);
+}
+
+/* ===== Settings Modal (Новые стили) ===== */
+.settings-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.settings-modal.visible {
+    display: flex;
+}
+
+.settings-content {
+    background: radial-gradient(600px 250px at 10% 0%, rgba(255, 215, 0, .05), transparent 50%), linear-gradient(#3a2921, #2c1e19);
+    border: 2px solid #ffd700;
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 500px;
+    width: 92%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .55), inset 0 0 50px rgba(0, 0, 0, .25);
+}
+
+.settings-content h2 {
+    color: #ffd700;
+    margin-bottom: 24px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-size: 2rem;
+}
+
+.settings-info {
+    color: #f0d6a7;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 24px;
+}
+
+.settings-info strong {
+    color: #ffd700;
+}
+
+.settings-info a {
+    color: #ffecb3;
+    text-decoration: none;
+    transition: color .2s;
+}
+
+.settings-info a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.close-settings {
+    background: linear-gradient(#ff6b6b, #cc5555);
+    color: white;
+    border: 2px solid #8b4513;
+    padding: 10px 20px;
+    font-family: 'MedievalSharp', cursive;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.close-settings:hover {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.35);
+}
+
+/* ===== Animations ===== */
+@keyframes slimeFloat {
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(-50%, -53%) scale(1.08) rotate(3deg);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+
+    75% {
+        transform: translate(-50%, -53%) scale(1.08) rotate(-3deg);
+    }
+}
+
+@keyframes damageFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-52px);
+    }
+}
+
+@keyframes deathAnimation {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.6));
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1.2);
+        filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.8));
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+        filter: drop-shadow(0 0 50px rgba(255, 0, 0, 1));
+    }
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+    .top-buttons {
+        flex-direction: column;
+        right: 10px;
+    }
+
+    .settings-btn,
+    .inventory-btn,
+    .farm-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    .guide-container {
+        left: 20px;
+        bottom: 30px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .guide-image {
+        width: 200px;
+        height: 240px;
+    }
+
+    .guide-speech {
+        max-width: 320px;
+        margin-left: 0;
+    }
+
+    .guide-speech::before,
+    .guide-speech::after {
+        left: 50%;
+        bottom: -20px;
+        transform: translateX(-50%) rotate(90deg);
+    }
+
+    .guide-text {
+        font-size: 1rem;
+    }
+
+    .boss,
+    .chest {
+        width: 210px;
+        height: 210px;
+    }
+
+    .boss-hp {
+        top: -40px;
+        font-size: 1rem;
+        padding: 8px 10px;
+    }
+
+    .hp-bar {
+        width: 220px;
+        height: 10px;
+    }
+
+    .damage-text {
+        font-size: 1.25rem;
+    }
+
+    .click-damage,
+    .farm-info {
+        font-size: .98rem;
+        padding: 6px 12px;
+    }
+
+    /* Reset confirm удален */
+
+    .inventory-content {
+        padding: 20px;
+    }
+
+    .inventory-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .item-info {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-container {
+        top: 10px;
+        left: 10px;
+    }
+    .logo-img {
+        width: 90px;
+    }
+    .guide-image {
+        width: 150px;
+        height: 180px;
+    }
+
+    .guide-speech {
+        max-width: 260px;
+        padding: 14px;
+    }
+
+    .guide-text {
+        font-size: 0.92rem;
+    }
+
+    .boss,
+    .chest {
+        width: 160px;
+        height: 160px;
+    }
+
+    .continue-btn,
+    .back-to-battle-btn,
+    .craft-btn {
+        padding: 10px 22px;
+        font-size: .98rem;
+    }
+
+    .boss-hp {
+        top: -32px;
+        font-size: .92rem;
+        padding: 6px 8px;
+    }
+
+    .hp-bar {
+        width: 200px;
+        height: 9px;
+    }
+
+    .damage-text {
+        font-size: 1.05rem;
+    }
+
+    .inventory-content, .settings-content {
+        padding: 16px;
+    }
+
+    .inventory-content h2, .settings-content h2 {
+        font-size: 1.6rem;
+    }
+
+    .item-image {
+        width: 56px;
+        height: 56px;
+    }
+
+    .item-info {
+        text-align: center;
+    }
+}
