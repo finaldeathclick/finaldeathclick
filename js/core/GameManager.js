@@ -17,7 +17,7 @@ const WEAPONS = {
         id: 'uncommon',
         name: 'Необычный Меч',
         damage: 20,
-        img: 'НеобычныйМеч.PNG',
+        img: 'НеобычныйМеч.png',
         next: {
             id: 'rare',
             label: 'Синтезировать',
@@ -29,7 +29,7 @@ const WEAPONS = {
         id: 'rare',
         name: 'Редкий Меч',
         damage: 30,
-        img: 'РедкийМеч.PNG',
+        img: 'РедкийМеч.png',
         next: {
             id: 'legendary',
             label: 'Пробудить',
@@ -41,7 +41,7 @@ const WEAPONS = {
         id: 'legendary',
         name: 'Легендарный Меч',
         damage: 100,
-        img: 'ЛегендарныйМеч.PNG',
+        img: 'ЛегендарныйМеч.png',
         next: {
             id: 'relic',
             label: 'Улучшить',
@@ -53,7 +53,7 @@ const WEAPONS = {
         id: 'relic',
         name: 'Реликтовый Меч',
         damage: 200,
-        img: 'РеликвияМеч.PNG',
+        img: 'РеликвияМеч.png',
         next: {
             id: 'mythic',
             label: 'Улучшить',
@@ -65,7 +65,7 @@ const WEAPONS = {
         id: 'mythic',
         name: 'Мифический Меч',
         damage: 1000,
-        img: 'МифическийМеч.PNG',
+        img: 'МифическийМеч.png',
         next: {
             id: 'divine',
             label: 'Улучшить',
@@ -77,7 +77,7 @@ const WEAPONS = {
         id: 'divine',
         name: 'Божественный Меч',
         damage: 4500,
-        img: 'БожественныйМеч.PNG',
+        img: 'БожественныйМеч.png',
         next: {
             id: 'epochal',
             label: 'Пробудить',
@@ -89,7 +89,7 @@ const WEAPONS = {
         id: 'epochal',
         name: 'Меч Эпохи Чудес',
         damage: 10000,
-        img: 'МечЭпохиЧудес.PNG',
+        img: 'МечЭпохиЧудес.png',
         next: {
             id: 'fable',
             label: 'Сотворить',
@@ -101,7 +101,7 @@ const WEAPONS = {
         id: 'fable',
         name: 'Меч Эпохи Сказаний',
         damage: 25000,
-        img: 'МечЭпохиСказаний.PNG',
+        img: 'МечЭпохиСказаний.png',
         next: null
     }
 };
