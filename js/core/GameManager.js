@@ -189,7 +189,7 @@ class GameManager {
     tryChestDrop() {
         const rand = Math.random();
         
-        if (rand < 0.02) {
+        if (rand < 0.92) {
             this.gameState.inventory.relicEssence = (this.gameState.inventory.relicEssence || 0) + 1;
             this.saveGame();
             return { dropped: true, type: 'relic' };
